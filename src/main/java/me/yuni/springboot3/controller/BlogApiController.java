@@ -3,6 +3,7 @@ package me.yuni.springboot3.controller;
 import lombok.RequiredArgsConstructor;
 import me.yuni.springboot3.DTO.AddArticleRequest;
 import me.yuni.springboot3.DTO.ArticleResponse;
+import me.yuni.springboot3.DTO.UpdateArticleRequest;
 import me.yuni.springboot3.domain.Article;
 import me.yuni.springboot3.service.BlogService;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,14 @@ public class BlogApiController {
 
         return ResponseEntity.ok()
                 .build();
+    }
+
+    //글 수정
+    @PutMapping("api/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody UpdateArticleRequest request){
+        Article updateArticle = blogService.update(id,request);
+
+        return ResponseEntity.ok()
+                .body(updateArticle);
     }
 }

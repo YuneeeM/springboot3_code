@@ -2,9 +2,11 @@ package me.yuni.springboot3.service;
 
 import lombok.RequiredArgsConstructor;
 import me.yuni.springboot3.DTO.AddArticleRequest;
+import me.yuni.springboot3.DTO.UpdateArticleRequest;
 import me.yuni.springboot3.domain.Article;
 import me.yuni.springboot3.repository.BlogRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,5 +38,13 @@ public class BlogService {
     }
 
     //글 수정
+    @Transactional //트랜잭션 메서드
+    public Article update(Long id, UpdateArticleRequest request) {
+        Article article = blogRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("not found:"+id));
 
+        article.update(request.getTitle(), request.getContent());
+
+        return article;
+    }
 }
