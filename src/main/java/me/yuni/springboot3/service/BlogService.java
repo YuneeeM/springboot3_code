@@ -19,7 +19,22 @@ public class BlogService {
         return blogRepository.save(request.toEntity());
     }
 
+    //모든 데이터 조회
     public List<Article> findAll(){
         return blogRepository.findAll();
     }
+
+    //글 ID 조회
+    public Article findById(Long id){
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: "+ id));
+    }
+
+    //글 삭제
+    public void delete(Long id){
+        blogRepository.deleteById(id);
+    }
+
+    //글 수정
+
 }
